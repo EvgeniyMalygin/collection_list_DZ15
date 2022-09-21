@@ -17,7 +17,10 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-
+    @GetMapping
+    public Collection<Employee> printAllEmployees() {
+        return employeeService.printAllEmployees();
+    }
     @GetMapping("/add")
     public Employee addEmployee(@RequestParam("fistName") String fistName, @RequestParam("lastName") String lastName) {
         return employeeService.addEmploy(fistName, lastName);
