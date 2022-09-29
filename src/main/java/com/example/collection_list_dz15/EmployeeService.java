@@ -3,12 +3,11 @@ package com.example.collection_list_dz15;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService implements EmployeeServiceInterface {
 
-    private final Map<String, Employee> employeeList;
+    public final Map<String, Employee> employeeList;
 
 
     public EmployeeService() {
@@ -53,51 +52,4 @@ public class EmployeeService implements EmployeeServiceInterface {
         return Collections.unmodifiableCollection(employeeList.values());
     }
 
-    //Поиск сотрудника с минимальной зарплатой в отделе
-    @Override
-    public Collection<Employee> minSalaryInDepartment(int numberDepartment) {
-
-        if (employeeList.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-        return employeeList.values()
-                .stream()
-                .filter(e -> e.getDepartment() == numberDepartment)
-                .min(Comparator.comparingDouble(employee -> employee.getSalary())).stream()
-                .collect(Collectors.toList());
-    }
-
-    //Поиск сотрудника с максимальной зарплатой в отделе
-    @Override
-    public Collection<Employee> maxSalaryInDepartment(int number) {
-        if (employeeList.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-        return employeeList.values()
-                .stream()
-                .filter(e -> e.getDepartment() == number)
-                .max(Comparator.comparingDouble(employee -> employee.getSalary())).stream()
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    //Печать списка сотрудников отдела
-    public Collection<Employee> printEmployeeInDepartment(int number) {
-        if (employeeList.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-        return employeeList.values()
-                .stream()
-                .filter(e -> e.getDepartment() == number)
-                .collect(Collectors.toList());
-    }
-
-    //Печать списка сотрудников отдела
-    public List<Employee> printAllForDepartment() {
-        if (employeeList.isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-        List<Employee> tempList = new ArrayList<>(employeeList.values());
-        return tempList.stream().sorted(Comparator.comparing(Employee::getDepartment)).collect(Collectors.toList());
-    }
 }

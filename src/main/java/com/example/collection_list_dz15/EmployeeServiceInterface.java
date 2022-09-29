@@ -13,10 +13,4 @@ public interface EmployeeServiceInterface {
 
     Collection<Employee> printAllEmployees();
 
-    Collection<Employee> minSalaryInDepartment(int numberDepartment);
-
-    Collection<Employee> maxSalaryInDepartment(int number);
-
-
-    Collection<Employee> printEmployeeInDepartment(int number);
 }
