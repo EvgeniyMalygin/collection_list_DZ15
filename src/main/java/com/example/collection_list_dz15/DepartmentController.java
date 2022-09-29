@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/employee/departments")
 public class DepartmentController {
     private final DepartmentService departmentService;
 
@@ -18,22 +18,23 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-
-    @GetMapping("/departments/min-salary")
+    @GetMapping("/min-salary")
     public Employee minSalary(@RequestParam("departmentId") int departmentId) {
         return departmentService.minSalaryInDepartment(departmentId);
     }
 
-    @GetMapping("/departments/max-salary")
+    @GetMapping("/max-salary")
     public Employee maxSalary(@RequestParam("departmentId") int departmentId) {
         return departmentService.maxSalaryInDepartment(departmentId);
     }
 
-    @GetMapping("/departments/all")
-    public Object printEmployeeInDepartment(Integer departmentId) {
-        if (departmentId != null){
-            return departmentService.printEmployeeInDepartment(departmentId);
-        }else return departmentService.printEmployeeInDepartment();
+    @GetMapping(value = "/all", params = "departmentId")
+    public Object printEmployeeInDepartment(@RequestParam("departmentId") Integer departmentId) {
+        return departmentService.printEmployeeInDepartment(departmentId);
     }
 
+    @GetMapping("/all")
+    public Object printEmployeeInDepartment() {
+        return departmentService.printEmployeeInDepartment();
+    }
 }

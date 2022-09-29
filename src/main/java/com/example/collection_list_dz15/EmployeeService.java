@@ -48,7 +48,6 @@ public class EmployeeService implements EmployeeServiceInterface {
     //Печать списка всех сотрудников
     @Override
     public Collection<Employee> printAllEmployees() {
-
         return Collections.unmodifiableCollection(employeeList.values());
     }
 
