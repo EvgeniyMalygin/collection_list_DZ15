@@ -1,6 +1,10 @@
 package com.example.collection_list_dz15;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class Employee {
     private String fistName;
@@ -9,8 +13,8 @@ public class Employee {
     private int department;
 
     public Employee(String lastName, String fistName, double salary, int department) {
-        this.fistName = fistName;
-        this.lastName = lastName;
+        this.fistName = capitalize(fistName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase());
         this.salary = salary;
         this.department = department;
     }

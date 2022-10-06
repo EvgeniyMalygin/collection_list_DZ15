@@ -1,8 +1,11 @@
 package com.example.collection_list_dz15;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class EmployeeService implements EmployeeServiceInterface {
@@ -17,6 +20,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     //Добавление сотрудника
     @Override
     public Employee addEmploy(String fistName, String lastName, double salary, int department) {
+        validateInput(fistName, lastName);
         Employee tempEmploee = new Employee(lastName, fistName, salary, department);
         if (employeeList.containsKey(tempEmploee.getFullName())) {
             throw new EmployeeAlreadyAddedException();
@@ -28,6 +32,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     //Удаление сотрудника
     @Override
     public Employee removeEmploy(String fistName, String lastName) {
+        validateInput(fistName, lastName);
         Employee tempEmploy = new Employee(lastName, fistName, 0, 0);
         if (employeeList.containsKey(tempEmploy.getFullName())) {
             return employeeList.remove(tempEmploy.getFullName());
@@ -38,6 +43,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     //Поиск сотрудника
     @Override
     public Employee findEmploy(String fistName, String lastName) {
+        validateInput(fistName, lastName);
         Employee tempEmploy = new Employee(lastName, fistName, 0, 0);
         if (employeeList.containsKey(tempEmploy.getFullName())) {
             return employeeList.get(tempEmploy.getFullName());
@@ -49,6 +55,12 @@ public class EmployeeService implements EmployeeServiceInterface {
     @Override
     public Collection<Employee> printAllEmployees() {
         return Collections.unmodifiableCollection(employeeList.values());
+    }
+
+    private void validateInput(String fistName, String lastName) {
+        if(!(isAlpha(fistName) && isAlpha(lastName))){
+            throw new InvalidInputExeption();
+        };
     }
 
 }

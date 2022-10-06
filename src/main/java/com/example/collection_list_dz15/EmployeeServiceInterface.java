@@ -1,7 +1,6 @@
 package com.example.collection_list_dz15;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface EmployeeServiceInterface {
 
