@@ -1,14 +1,22 @@
 package com.example.collection_list_dz15;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
-public class Employee {
-    private String fistName;
-    private String lastName;
+import static org.apache.commons.lang3.StringUtils.*;
 
-    public Employee(String lastName, String fistName) {
-        this.fistName = fistName;
-        this.lastName = lastName;
+public class Employee {
+    private final String fistName;
+    private final String lastName;
+    private final double salary;
+    private final int department;
+
+    public Employee(String lastName, String fistName, double salary, int department) {
+        this.fistName = StringUtils.capitalize(fistName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase());
+        this.salary = salary;
+        this.department = department;
     }
 
     public String getFistName() {
@@ -17,6 +25,18 @@ public class Employee {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getFullName() {
+        return fistName + " " + lastName;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public int getDepartment() {
+        return department;
     }
 
     @Override
@@ -39,4 +59,5 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
+
 }

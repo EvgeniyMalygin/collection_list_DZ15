@@ -2,59 +2,68 @@ package com.example.collection_list_dz15;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class EmployeeService implements EmployeeServiceInterface {
-    private static List<Employee> employeeList = new ArrayList<>(List.of(
-            new Employee("Петров", "Иван"),
-            new Employee("Иванов", "Иван"),
-            new Employee("Сидоров", "Петр"),
-            new Employee("Сергеев", "Демид"),
-            new Employee("Терновский", "Олег"),
-            new Employee("Мимиков", "Федор"),
-            new Employee("Демидов", "Ринат"),
-            new Employee("Черкасов", "Николай"),
-            new Employee("Козлов", "Олег"),
-            new Employee("Ястребов", "Дмитрий")
-    ));
 
+    public Map<String, Employee> employeeList;
+
+
+    public EmployeeService() {
+
+        this.employeeList = new HashMap<>();
+    }
+
+    //Добавление сотрудника
     @Override
-    public Employee addEmploy(String fistName, String lastName) {
-        Employee tempEmploee = new Employee(lastName, fistName);
-        if (employeeList.contains(tempEmploee)) {
+    public Employee addEmploy(String fistName, String lastName, double salary, int department) {
+        validateInput(fistName, lastName);
+        Employee tempEmploee = new Employee(lastName, fistName, salary, department);
+        if (employeeList.containsKey(tempEmploee.getFullName())) {
             throw new EmployeeAlreadyAddedException();
         }
-        employeeList.add(tempEmploee);
+        employeeList.put(tempEmploee.getFullName(), tempEmploee);
         return tempEmploee;
     }
 
+    //Удаление сотрудника
     @Override
     public Employee removeEmploy(String fistName, String lastName) {
-        Employee tempEmploy = new Employee(lastName, fistName);
-        findEmploy(fistName, lastName);
-        if (employeeList.contains(tempEmploy)) {
-            employeeList.remove(tempEmploy);
-            return tempEmploy;
+        validateInput(fistName, lastName);
+        Employee tempEmploy = new Employee(lastName, fistName, 0, 0);
+        if (employeeList.containsKey(tempEmploy.getFullName())) {
+            return employeeList.remove(tempEmploy.getFullName());
         }
         throw new EmployeeNotFoundException();
     }
 
+    //Поиск сотрудника
     @Override
     public Employee findEmploy(String fistName, String lastName) {
-        Employee tempEmploy = new Employee(lastName, fistName);
-        if (employeeList.contains(tempEmploy)) {
-            return tempEmploy;
+        validateInput(fistName, lastName);
+        Employee tempEmploy = new Employee(lastName, fistName, 0, 0);
+        if (employeeList.containsKey(tempEmploy.getFullName())) {
+            return employeeList.get(tempEmploy.getFullName());
         }
         throw new EmployeeNotFoundException();
     }
 
+    //Печать списка всех сотрудников
     @Override
     public Collection<Employee> printAllEmployees() {
-        return Collections.unmodifiableList(employeeList);
+        return Collections.unmodifiableCollection(employeeList.values());
     }
 
+    private void validateInput(String fistName, String lastName) {
+        if(!(isAlpha(fistName) && isAlpha(lastName))){
+            throw new InvalidInputExeption();
+        }
+    }
+    //Добавлен метод чтобы написать тесты Mockit
+    public Collection<Employee> returnAll() {
+        return employeeList.values();
+    }
 }
