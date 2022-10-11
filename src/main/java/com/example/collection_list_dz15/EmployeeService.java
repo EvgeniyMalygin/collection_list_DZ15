@@ -9,7 +9,7 @@ import static org.apache.commons.lang3.StringUtils.*;
 @Service
 public class EmployeeService implements EmployeeServiceInterface {
 
-    public final Map<String, Employee> employeeList;
+    public Map<String, Employee> employeeList;
 
 
     public EmployeeService() {
@@ -62,5 +62,8 @@ public class EmployeeService implements EmployeeServiceInterface {
             throw new InvalidInputExeption();
         }
     }
-
+    //Добавлен метод чтобы написать тесты Mockit
+    public Collection<Employee> returnAll() {
+        return employeeList.values();
+    }
 }

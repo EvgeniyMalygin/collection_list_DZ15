@@ -17,7 +17,7 @@ public class DepartmentService {
 
     public Employee minSalaryInDepartment(int numberDepartment) {
 
-        return employeeService.employeeList.values()
+        return employeeService.returnAll()
                 .stream()
                 .filter(e -> e.getDepartment() == numberDepartment)
                 .min(Comparator.comparingDouble(Employee::getSalary)).orElseThrow(EmployeeNotFoundException::new);
@@ -27,7 +27,7 @@ public class DepartmentService {
 
     public Employee maxSalaryInDepartment(int number) {
 
-        return employeeService.employeeList.values()
+        return employeeService.returnAll()
                 .stream()
                 .filter(e -> e.getDepartment() == number)
                 .max(Comparator.comparingDouble(Employee::getSalary)).orElseThrow(EmployeeNotFoundException::new);
@@ -36,13 +36,12 @@ public class DepartmentService {
     //Печать списка сотрудников отдела
     public List<Employee> printEmployeeInDepartment(Integer number) {
 
-        return employeeService.employeeList.values().stream().filter(e -> e.getDepartment() == number)
+        return employeeService.returnAll().stream().filter(e -> e.getDepartment() == number)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     //Печать списка всех сотрудников с группировкой по отделам
     public Map<Integer, List<Employee>> printEmployeeInDepartment() {
-        return employeeService.employeeList.values().stream().collect(Collectors.groupingBy(Employee::getDepartment));
+        return employeeService.returnAll().stream().collect(Collectors.groupingBy(Employee::getDepartment));
     }
-
 }
