@@ -7,13 +7,13 @@ import java.util.Objects;
 import static org.apache.commons.lang3.StringUtils.*;
 
 public class Employee {
-    private String fistName;
-    private String lastName;
-    private double salary;
-    private int department;
+    private final String fistName;
+    private final String lastName;
+    private final double salary;
+    private final int department;
 
     public Employee(String lastName, String fistName, double salary, int department) {
-        this.fistName = capitalize(fistName.toLowerCase());
+        this.fistName = StringUtils.capitalize(fistName.toLowerCase());
         this.lastName = capitalize(lastName.toLowerCase());
         this.salary = salary;
         this.department = department;
